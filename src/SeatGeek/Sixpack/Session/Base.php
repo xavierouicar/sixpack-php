@@ -58,7 +58,11 @@ class Base
     protected function storeClientId($clientId)
     {
         $cookieName = $this->cookiePrefix . '_client_id';
-        setcookie($cookieName, $clientId, time() + (60 * 60 * 24 * 30 * 100), "/");
+        try {
+        	setcookie($cookieName, $clientId, time() + (60 * 60 * 24 * 30 * 100), "/");
+        } catch (Exception $e) {
+			// Cookies can't be set on this device
+        }
     }
 
     protected function generateClientId()
